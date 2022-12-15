@@ -3,6 +3,7 @@ import {
   Exchange,
   EXCHANGES,
   normalizeBookChanges,
+  NormalizedData,
   normalizeDerivativeTickers,
   normalizeTrades,
   replay,
@@ -90,8 +91,8 @@ describe('replay', () => {
       }
 
       const bitmexDataFeedMessages = replay(replayOptions)
-      const receivedMessages = []
-      const receivedTimestamps = []
+      const receivedMessages: any[] = []
+      const receivedTimestamps: any[] = []
 
       for await (let { message, localTimestamp } of bitmexDataFeedMessages) {
         receivedMessages.push(message)
@@ -103,8 +104,8 @@ describe('replay', () => {
 
       // perfrom the same test but get raw feed and decode here manually
       const bitmexDataFeedRawMessages = replay({ ...replayOptions, skipDecoding: true })
-      const receivedMessagesOfRawFeed = []
-      const receivedTimestampsOfRawFeed = []
+      const receivedMessagesOfRawFeed: any[] = []
+      const receivedTimestampsOfRawFeed: any[] = []
 
       for await (let { message, localTimestamp } of bitmexDataFeedRawMessages) {
         receivedMessagesOfRawFeed.push(JSON.parse(message.toString()))
@@ -132,8 +133,8 @@ describe('replay', () => {
         ]
       })
 
-      const receivedMessages = []
-      const receivedTimestamps = []
+      const receivedMessages: string[] = []
+      const receivedTimestamps: Date[] = []
 
       for await (let { message, localTimestamp } of coinbaseDataFeedMessages) {
         receivedMessages.push(JSON.stringify(message))
@@ -161,8 +162,8 @@ describe('replay', () => {
         ]
       })
 
-      const receivedMessages = []
-      const receivedTimestamps = []
+      const receivedMessages: string[] = []
+      const receivedTimestamps: Date[] = []
 
       for await (let { message, localTimestamp } of binanceDataFeedMessages) {
         receivedMessages.push(JSON.stringify(message))
@@ -249,7 +250,7 @@ describe('replay', () => {
         )
 
         let count = 0
-        const bufferedMessages = []
+        const bufferedMessages: NormalizedData[] = []
 
         for await (const message of messages) {
           if (message.type === 'book_change' && (message as any).isSnapshot === true) {

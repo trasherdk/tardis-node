@@ -99,8 +99,8 @@ const createMapper = (exchange: Exchange, localTimestamp?: Date) => {
   const mappersForExchange = normalizers.map((m: any) => m(exchange, localTimestamp)) as Mapper<any, any>[]
 
   return {
-    map(message: any, localTimestamp: Date) {
-      const responses = []
+    map (message: any, localTimestamp: Date) {
+      const responses: any[] = []
       for (const mapper of mappersForExchange) {
         if (mapper.canHandle(message)) {
           const mappedMessages = mapper.map(message, localTimestamp)
