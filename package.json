@@ -13,7 +13,7 @@
   "scripts": {
     "build": "tsc",
     "precommit": "lint-staged",
-    "test": "npm run build && jest --forceExit --runInBand",
+    "test": "npm run build && jest --bail --forceExit --runInBand --detectOpenHandles",
     "prepare": "npm run build",
     "format": "prettier --write .",
     "check-format": "prettier --check ."

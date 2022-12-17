@@ -1,4 +1,5 @@
-const { replayNormalized, streamNormalized, normalizeTrades, compute, computeTradeBars } = require('tardis-dev')
+// const { replayNormalized, streamNormalized, normalizeTrades, compute, computeTradeBars } = require('tardis-dev')
+const { replayNormalized, streamNormalized, normalizeTrades, compute, computeTradeBars } = require('./dist/index.js')
 
 const historicalMessages = replayNormalized(
   {
@@ -18,7 +19,7 @@ const realTimeMessages = streamNormalized(
   normalizeTrades
 )
 
-async function produceVolumeBasedTradeBars(messages) {
+async function produceVolumeBasedTradeBars (messages) {
   // aggregate by 50k contracts volume
   const withVolumeTradeBars = compute(messages, computeTradeBars({ kind: 'volume', interval: 50 * 1000 }))
 
@@ -29,7 +30,11 @@ async function produceVolumeBasedTradeBars(messages) {
   }
 }
 
-await produceVolumeBasedTradeBars(historicalMessages)
+(async () => {
 
-// or for real time data
-//  await produceVolumeBasedTradeBars(realTimeMessages)
+  // await produceVolumeBasedTradeBars(historicalMessages)
+
+  // or for real time data
+  await produceVolumeBasedTradeBars(realTimeMessages)
+
+})()
